@@ -11,7 +11,10 @@
 .textcolor {
   color: #1EA74A;
 }
+.textlightgreen{
+  color: #008C87;
 
+}
 .textgrey {
   color: '#515151';
 }
@@ -19,18 +22,25 @@
 .textcolorblue {
   color: #103054;
 }
-
+.lightgreen{
+  color: #07B6AF;
+}
 /* for background color */
 .bg_green {
   background-color: #1EA74A;
 }
-
+/* border color */
+.borderlightgreen{
+  border: 1px solid #07B6AF;
+}
 .boxwidth {
-  position: absolute;
+  /* position: absolute; */
   width: 359px;
   height: 517px;
   top: 157px;
-  left: 781px;
+  /* left: 781px; */
   gap: 25px;
-
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
 }

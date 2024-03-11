@@ -1,181 +1,89 @@
 import React from 'react'
-
+import Modal from '../Components/Modal'
+import Table from '../Components/Table'
+import logo from '../Assets/logo.png'
+import downloadsign from '../Assets/Vector.png'
 const PTdashboard = () => {
-  return (
-   <>
-   <div className="container">
-    <div className="row">
-        <div className="col-12">
-            {/* navbar section */}
-            {/* table section */}
-            import React, { useRef, useState } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table } from 'antd';
-import Highlighter from 'react-highlight-words';
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Joe Black',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Jim Green',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
-  },
-];
-const App = () => {
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef(null);
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-  const handleReset = (clearFilters) => {
-    clearFilters();
-    setSearchText('');
-  };
-  const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{
-            marginBottom: 8,
-            display: 'block',
-          }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Reset
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({
-                closeDropdown: false,
-              });
-              setSearchText(selectedKeys[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              close();
-            }}
-          >
-            close
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? '#1677ff' : undefined,
-        }}
-      />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: '#ffc069',
-            padding: 0,
-          }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
-      ),
-  });
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      width: '30%',
-      ...getColumnSearchProps('name'),
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-      width: '20%',
-      ...getColumnSearchProps('age'),
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-      ...getColumnSearchProps('address'),
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortDirections: ['descend', 'ascend'],
-    },
-  ];
-  return <Table columns={columns} dataSource={data} />;
-};
+  const CONFIG_OBJ = {                                         //config object
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + sessionStorage.getItem("token")
+    }
+  }
 
+  return (
+    <>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12">
+            {/* navbar section */}
+            <nav className="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+              <div className="container-fluid">
+                <img className='mx-2' width='86px' height='15px' src={logo} alt="earthoodlogo" />
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span className="navbar-toggler-icon" />
+                </button>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li className="nav-item">
+                      <a className="nav-link active" aria-current="page" href="#">Dashboard</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#">Clients</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#">Projects</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#">Invoice</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#">People</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="#">Everything</a>
+                    </li>
+                  </ul>
+                  {/* <form className="d-flex" role="search">
+                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button className="btn btn-outline-success" type="submit">Search</button>
+                  </form> */}
+                </div>
+              </div></nav>
+
+          </div>
         </div>
-    </div>
-   </div>
-   </>
+      </div >
+      {/*  */}
+      {/* table section */}
+      <div className="d-flex justify-content-between align-items-center m-3">
+        <div>
+          <h5 className='textcolorblue'>Welcome Back, Hemanshu</h5>
+          <p className='textlightgreen'>Track, manage & forecast your day to day activity!</p>
+        </div>
+        <div className="d-flex gap-2 align-items-center mx-5">
+          <button className='btn border-light-subtle textcolor' style={{fontSize: '14px'}}>Download Report  <img src={downloadsign} alt="downloadsign"/></button>
+          
+          <div className="nav-item border-0 dropdown " role="group">
+            <a class="nav-link dropdown-toggle fontcolor" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Add 
+            </a>
+            <ul className="dropdown-menu">
+              <li><button className="nav-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Client</button></li>
+              <li><button className="nav-link" to="#">Add Project</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <Modal />
+      <Table />
+
+
+
+
+    </>
   )
 }
 

@@ -1,8 +1,9 @@
 import './App.css';
+import './Assets/logo.png'
 import Login from './Pages/Login'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import ForgotPassword from './Pages/ForgotPassword';
-import OtpPage from './Pages/OtpPage'
+import PTdashboard from './Pages/PTdashboard';
 function App() {
   return (
     <>
@@ -10,7 +11,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
-          <Route path="/otppage" element={<OtpPage />}></Route>
+          <Route path='/dashboard' element={<PTdashboard />}></Route>
         </Routes>
       </Router>
     </>
