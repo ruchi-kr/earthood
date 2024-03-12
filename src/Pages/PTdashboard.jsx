@@ -1,4 +1,5 @@
 import React from 'react'
+import Tab from '../Components/Tab'
 import Modal from '../Components/Modal'
 import Table from '../Components/Table'
 import logo from '../Assets/logo.png'
@@ -13,7 +14,7 @@ const PTdashboard = () => {
 
   return (
     <>
-      <div className="container-fluid">
+      <div className="container-fluid m-0">
         <div className="row">
           <div className="col-12">
             {/* navbar section */}
@@ -26,21 +27,21 @@ const PTdashboard = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <li className="nav-item">
-                      <a className="nav-link active" aria-current="page" href="#">Dashboard</a>
+                      <a className="nav-link active textgrey btnhovergrey" aria-current="page" href="#">Dashboard</a>
                     </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">Clients</a>
+                    <li className="nav-item textgrey btnhovergrey">
+                      <a className="nav-link " href="#">Clients</a>
                     </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">Projects</a>
+                    <li className="nav-item textgrey btnhovergrey">
+                      <a className="nav-link " href="#">Projects</a>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item textgrey btnhovergrey">
                       <a className="nav-link" href="#">Invoice</a>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item textgrey btnhovergrey">
                       <a className="nav-link" href="#">People</a>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item textgrey btnhovergrey">
                       <a className="nav-link" href="#">Everything</a>
                     </li>
                   </ul>
@@ -76,7 +77,7 @@ const PTdashboard = () => {
           </div>
         </div>
       </div>
-
+<Tab/>
       <Modal />
       <Table />
 
