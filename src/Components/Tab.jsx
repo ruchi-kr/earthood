@@ -6,12 +6,12 @@ const Tab = () => {
         <>
             <Tabs>
                 <Tabs.TabPane tab={
-                    <div className='border-1 borderlightgreen rounded-2' style={{ width: '300px' }}>
+                    <div className='border-1 borderlightgreen rounded-2 p-3 m-3'>
                         <img src="" alt="icon" />
                         <p className='font14px textlightgreen text-capitalize'>Total Clients</p>
-                        <div className='d-flex justify-content-around'>
+                        <div className='d-flex justify-content-between'>
                             <p className='textcolorblue' style={{ fontSize: '35px' }}>100</p>
-                            <div className='border-1 bordergreen rounded-4 d-flex '>
+                            <div className='border-1 bordergreen rounded-4'>
                                 <img src={vectorarrow} alt="icon" />
                                 <p className='font14px'>50</p>
                             </div>
