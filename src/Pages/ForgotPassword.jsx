@@ -24,7 +24,7 @@ const ForgotPassword = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Try Again");
+        toast.error(error.response.data.message);
       })
   }
   // otp verify
@@ -39,7 +39,7 @@ const ForgotPassword = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Try Again");
+        toast.error(error.response.data.message);
       })
   }
   return (

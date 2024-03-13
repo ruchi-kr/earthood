@@ -7,25 +7,34 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { pt_login_url } from '../config';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 const Login = () => {
     const [user_id, setUser_id] = useState("");
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const loggingin = (event) => {
         event.preventDefault();
         const requestData = { user_id, password }
         axios.post(`${pt_login_url}`, requestData)
             .then((result) => {
-                if (result.status === 200) {
+               
+                if (result.status === 200 && result.data.status === true) {
                     sessionStorage.setItem("token", result.data.token);
+                    console.log(result.data.token);
+                    sessionStorage.setItem('user', JSON.stringify(result.data.user));
+                    dispatch({ type: 'LOGIN_SUCCESS', payload: result.data.user });
                     toast.success('User Logged In Successfully!');
                     navigate('/dashboard')
                 }
+                else{
+                    toast.error(result.data.error);
+                }
             })
             .catch((error) => {
-                console.log(error);
-                toast.error("Invaid credentials");
+               
+                toast.error(error.response.data.message);
             })
     }
     return (
