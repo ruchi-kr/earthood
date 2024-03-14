@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 // pages
 import Tab from '../Components/Tab'
 import Modal from '../Components/Modal'
@@ -32,7 +32,7 @@ const PTdashboard = () => {
 
 
   return (
-    <>
+    <div className="bg-light">
       <div className="container-fluid m-0">
         <div className="row">
           <div className="col-12">
@@ -49,10 +49,10 @@ const PTdashboard = () => {
                       <a className="nav-link active textgrey btnhovergrey" aria-current="page" href="#">Dashboard</a>
                     </li>
                     <li className="nav-item textgrey btnhovergrey">
-                      <a className="nav-link " href="#">Clients</a>
+                      <Link className="nav-link " to="/clients">Clients</Link>
                     </li>
                     <li className="nav-item textgrey btnhovergrey">
-                      <a className="nav-link " href="#">Projects</a>
+                      <Link className="nav-link " to="/projects">Projects</Link>
                     </li>
                     <li className="nav-item textgrey btnhovergrey">
                       <a className="nav-link" href="#">Invoice</a>
@@ -108,7 +108,7 @@ const PTdashboard = () => {
           {/* <p className='textlightgreen'>Track, manage & forecast your day to day activity!</p> */}
         </div>
         <div className="d-flex gap-2 align-items-center mx-5">
-          <button className='btn border-light-subtle textcolor' style={{ fontSize: '14px' }}>Download Report  <img src={downloadsign} alt="downloadsign" /></button>
+          <button className='btn border-light-subtle textcolor bg-white' style={{ fontSize: '14px' }}>Download Report  <img src={downloadsign} alt="downloadsign" /></button>
           <Modal />
           {/* <div className="nav-item border-0 dropdown " role="group">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -122,14 +122,9 @@ const PTdashboard = () => {
           </div> */}
         </div>
       </div>
-      {/* <Tab /> */}
+      <Tab />
 
-      <CustomTable />
-
-      {/* <Tablept /> */}
-
-
-    </>
+    </div>
   )
 }
 

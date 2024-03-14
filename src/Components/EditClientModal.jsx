@@ -4,18 +4,15 @@ import axios from 'axios'
 import { add_client_url } from '../config';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+// import 'react-phone-number-input/style.css'
+// import PhoneInput from 'react-phone-number-input'
 const Modal = () => {
-
     const CONFIG_Token = {                                         //config object
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + sessionStorage.getItem("token")
         }
     }
-
-
     const { TextArea } = Input;
 
     const [name, setName] = useState('');
@@ -30,21 +27,13 @@ const Modal = () => {
     const navigate = useNavigate();
     const saveclient = (event) => {
         event.preventDefault();
-        const requestData = { name,email,mobile_number,contact_person,contact_email,country,address,contact_mobile}
+        const requestData = { name, email, mobile_number, contact_person, contact_email, country, address, contact_mobile }
         axios.post(`${add_client_url}`, requestData, CONFIG_Token)
             .then((result) => {
-                if (result.status) {
+                if (result.status===200) {
                     toast.success('Client Added Successfully!');
                     navigate('/dashboard')
                 }
-                setAddress('');
-                setName('');
-                setEmail('');
-                setMobile_number('');
-                setContact_person('');
-                setContact_email('');
-                setCountry('');
-                setContact_mobile('');
             })
             .catch((error) => {
                 console.log(error);
@@ -53,7 +42,6 @@ const Modal = () => {
     }
     return (
         <div>
-
             {/* add modal */}
             <div>
                 <button className='btn border-0 btn-success text-white bg_green' style={{ fontSize: '14px' }} data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Client</button>
@@ -63,7 +51,7 @@ const Modal = () => {
                             <div className="modal-content p-3">
                                 <div className="d-flex justify-content-between align-items-center m-3">
                                     <div>
-                                        <h1 className="modal-title fs-5 text-capitalize textcolorblue" id="staticBackdropLabel">Add Client</h1>
+                                        <h1 className="modal-title fs-5 text-capitalize textcolorblue" id="staticBackdropLabel">Edit Client</h1>
                                         <p className='textlightgreen mt-2'>A small KYC of your client for healthy relationship!</p>
                                     </div>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
@@ -128,15 +116,15 @@ const Modal = () => {
                                 {/* footer of modal */}
                                 <div className=" d-flex justify-content-end m-3 gap-2">
                                     <button type="button" className="btn btn-outline-success textcolor " data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" className="btn btn-success bg_green text-white">Add</button>
+                                    <button type="submit" className="btn btn-success bg_green text-white">Save Changes</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form >
-            </div>
+            </div >
 
-        </div>
+        </div >
     )
 }
 

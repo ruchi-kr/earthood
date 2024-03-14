@@ -72,27 +72,9 @@ const ForgotPassword = () => {
                     </div>
                     <p className='text-center' style={{ fontSize: '50px', fontWeight: '700', lineHeight: '60.51px' }}><span className='textcolorblue'>Recover your</span><br /><span className='textcolor'>account</span></p>
                     <p className='textgrey text-center'>Upon entering the registered email address you will receive an OTP to recover your account.</p>
-                    <div className="mb-3">
-                      <label htmlFor="Password3" className="form-label textcolorblue">New Password</label>
-                      <Input.Password
-                        type='password'
-                        id='Password3'
-                        value={newpassword} onChange={(e) => setNewpassword(e.target.value)}
-                        placeholder="password"
-                        iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="Password4" className=" textcolorblue">Confirm Password</label>
-                      <Input
-                        type='password'
-                        id='Password4'
-                        value={confirmpassword} onChange={(e) => setConfirmpassword(e.target.value)}
-                        placeholder="password"
-                      // iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                      />
-                    </div>
-                    {/* <Form.Item
+                   
+                    <Form layout="vertical">
+                    <Form.Item
                       name="password"
                       label="Password"
                       rules={[
@@ -102,8 +84,9 @@ const ForgotPassword = () => {
                         },
                       ]}
                       hasFeedback
-                    ><br />
-                      <Input.Password type="password" placeholder="New password" value={newpassword} onChange={(e) => setNewpassword(e.target.value)}/>
+                    >
+                      <Input.Password value={newpassword} onChange={(e) => setNewpassword(e.target.value)}/>
+                      {/* type="password" placeholder="New password" value={newpassword} onChange={(e) => setNewpassword(e.target.value)} */}
                     </Form.Item>
 
                     <Form.Item
@@ -126,11 +109,13 @@ const ForgotPassword = () => {
                         }),
                       ]}
                     >
-                      <Input.Password type="password" placeholder="confirm password" value={confirmpassword} onChange={(e) => setConfirmpassword(e.target.value)}/>
-                    </Form.Item> */}
+                      <Input.Password value={confirmpassword} onChange={(e) => setConfirmpassword(e.target.value)} />
+                      {/* type="password" placeholder="confirm password" value={confirmpassword} onChange={(e) => setConfirmpassword(e.target.value)} */}
+                    </Form.Item>
+                    </Form>
                     <div className="mb-3">
                       <label htmlFor="exampleInput2" className="form-label textcolorblue">Enter 4 Digit Code</label>
-                      <input value={otp} onChange={(e) => setOtp(e.target.value)} type="number" className="form-control" id="exampleInput2" />
+                      <input value={otp} onChange={(e) => setOtp(e.target.value)} type="number" className="form-control otpinput" id="exampleInput2" />
                     </div>
                   </div>
                   <div className="d-grid mx-3">
