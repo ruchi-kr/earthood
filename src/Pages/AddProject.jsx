@@ -56,8 +56,8 @@ const AddProject = () => {
                                             <input type="text" className="form-control borderlightgreen" id="Program" placeholder="Program" required />
                                         </div>
                                         <div className="col-4 mb-3">
-                                            <label for="Scope" className="form-label">Scope*</label>
-                                            <input type="text" className="form-control borderlightgreen" id="Scope" placeholder="Scope" required />
+                                            <label for="Program Id" className="form-label">Program Id*</label>
+                                            <input type="text" className="form-control borderlightgreen" id="Program Id" placeholder="Program Id" required />
                                         </div>
                                     </div>
                                     {/* row 3 */}
@@ -67,16 +67,41 @@ const AddProject = () => {
                                             <input type="number" className="form-control borderlightgreen" id="Implementation Fees" placeholder="Implementation Fees" required />
                                         </div>
                                         <div className="col-4 mb-3">
-                                            <label for="Program Id" className="form-label">Program Id*</label>
-                                            <input type="text" className="form-control borderlightgreen" id="Program Id" placeholder="Program Id" required />
-                                        </div>
-                                        <div className="col-4 mb-3">
                                             <label for="Proposal Date" className="form-label">Proposal Date*</label>
                                             <input type="date" className="form-control borderlightgreen" id="Proposal Date" required />
                                         </div>
+                                        <div className="col-4 mb-3">
+                                            <label for="Scope" className="form-label">Scope*</label>
+                                            <select id="Scope" className="form-select borderlightgreen form-select-sm" aria-label="Default select example" >
+                                                <option selected>Scope</option>
+                                                <option value={1}>One</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    
+
                                     {/* row 4 */}
+                                    <div className="row">
+                                        <div className="col-4 mb-3">
+                                            <label for="Scope(PO/POA)" className="form-label">Scope(PO/POA)*</label>
+                                            <select id="Scope(PO/POA)" className="form-select borderlightgreen form-select-sm" aria-label="Default select example" >
+                                                <option selected>Scope(PO/POA)</option>
+                                                <option value={1}>One</option>
+                                            </select>
+                                        </div>
+                                        <div className="col-4 mb-3">
+                                            <label for="Sectoral Scope" className="form-label">Sectoral Scope*</label>
+                                            <select id="Sectoral Scope" className="form-select borderlightgreen form-select-sm" aria-label="Default select example" >
+                                                <option selected>Sectoral Scope</option>
+                                                <option value={1}>One</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {/* row 5 */}
+                                    <p className='textlightgreen fw-bold m-3'>Assessment Team</p>
+                                    <hr />
+                                    <div className="row">
+
+                                    </div>
                                 </div>
                             </Tabs.items>
                             <Tabs.items tab={
