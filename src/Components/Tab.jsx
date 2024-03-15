@@ -110,7 +110,7 @@ const Tab = () => {
       key: 'x',
       fixed: 'right',
       width: 130,
-      render: () => <a className='d-flex justify-content-center'><img src={viewicon} alt="view icon" /> &nbsp;<EditClientModal/></a>,
+      render: (text, record) => <a className='d-flex justify-content-center'><img src={viewicon} alt="view icon" /> &nbsp;<EditClientModal clientId={record.id}/></a>,
     },
   ];
   const columnsProposalTeam = [
@@ -152,7 +152,7 @@ const Tab = () => {
       key: 'x',
       fixed: 'right',
       width: 130,
-      render: () => <a><img src={viewicon} alt="view icon" />&nbsp;<EditClientModal/></a>,
+      render: (text, record) => <a><img src={viewicon} alt="view icon" />&nbsp;<EditClientModal clientId={record.id}/></a>,
     },
   ];
 

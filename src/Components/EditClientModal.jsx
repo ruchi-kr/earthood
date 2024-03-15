@@ -8,7 +8,10 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { get_country_list_url } from '../config'
 import editicon from '../Assets/editicon.png';
-const EditClientModal = () => {
+import { dashboard_data_url } from '../config'
+import { get_all_clients_url, get_all_propoposal_url } from '../config';
+
+const EditClientModal = ({clientId}) => {
 
     const CONFIG_Token = {                                         //config object
         headers: {
@@ -20,7 +23,7 @@ const EditClientModal = () => {
 
     const { TextArea } = Input;
     const [open, setOpen] = useState(false);
-    const [client_id, setClient_id]= useState('')
+    const [client_id, setClient_id]= useState(0)
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [mobile_number, setMobile_number] = useState(0);
@@ -32,25 +35,58 @@ const EditClientModal = () => {
     const [contact_mobile, setContact_mobile] = useState('');
 
     const navigate = useNavigate();
-    const handleOpen = (rowData) => {
-        setOpen(true);
-        setName(rowData.name);
-        setEmail(rowData.email);
-        setMobile_number(rowData.mobile_number);
-        setContact_person(rowData.contact_person);
-        setContact_email(rowData.contact_email);
-        setOurCountry(rowData.country);
-        setOurCountryList(rowData.country_list);
-        setAddress(rowData.address);
-        setContact_mobile(rowData.contact_mobile);
-        setClient_id(rowData.id);
-      };
+    // const handleOpen = () => {
+    //     console.log("name data",name);
+    //     // setOpen(true);
+    //     setName(name);
+    //     // console.log("rowdata:", data);
+    //     // setEmail(rowData.email);
+    //     // setMobile_number(rowData.mobile_number);
+    //     // setContact_person(rowData.contact_person);
+    //     // setContact_email(rowData.contact_email);
+    //     // setOurCountry(rowData.country);
+    //     // setOurCountryList(rowData.country_list);
+    //     // setAddress(rowData.address);
+    //     // setContact_mobile(rowData.contact_mobile);
+    //     // setClient_id(rowData.id);
+    //   };
+
+      const handleOpen = async () => {
+         try {
+            console.log("Hello", clientId);
+            const response = await axios.get(`${get_all_clients_url}`, CONFIG_Token);
+            const clientData= response.data.data.filter((client) => client.id === clientId);
+            console.log("Razzzzzzzz", clientData[0]);
+        
+            setName(clientData[0].name);
+            // console.log("name",clientData[0].name);
+    
+            console.log("setName", name);
+            setEmail(clientData[0].email);
+            setMobile_number(clientData[0].mobile_number);
+            setContact_person(clientData[0].contact_person);
+            setContact_email(clientData[0].contact_email);
+            // setOurCountry(clientData[0].country);
+            setAddress(clientData[0].address);
+            setContact_mobile(clientData[0].contact_mobile);
+            setClient_id(clientData[0].id);
+         } catch (error) {
+            console.log(error)
+            
+         }
+    };
+
+    // useEffect(() => {
+    //     console.log("name", name);
+    //   }, [name]);
+      
+    
     // const handleClose = () => {
     //     setOpen(false);
     //   };
     
-      const handleEdit = async (rowData)=> {
-        console.log("rowdata:", rowData);
+      const handleEdit = async (data)=> {
+        console.log("rowdata:", data);
         // event.preventDefault();
            
         const requestData = { name, email, mobile_number, contact_person, contact_email, country, address, contact_mobile }
@@ -67,7 +103,6 @@ const EditClientModal = () => {
                     setContact_email('');
                     setOurCountry('');
                     setContact_mobile('');
-
                 }
                 else{
                     toast.error(result.data.message);
@@ -90,15 +125,15 @@ const EditClientModal = () => {
     }
     useEffect(function () {
         fetchcountrylist()
-    }, [])
+    },[]);
     return (
         <div>
 
             {/* edit client modal */}
             <div>
-                <button  onClick={(event, rowData) => handleOpen(rowData)} type="button" className='btn border-0' style={{ fontSize: '14px' }} data-bs-toggle="modal" data-bs-target="#exampleModal"><img src={editicon} alt="edit icon"/></button>
+            <button onClick={handleOpen} type="button" className='btn border-0' style={{ fontSize: '14px' }} data-bs-toggle="modal" data-bs-target="#exampleModal"><img src={editicon} alt="edit icon"/></button>
                 <form >
-                    <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+                    <div className="modal" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true" >
                         <div className="modal-dialog modal-lg">
                             <div className="modal-content p-3">
                                 <div className="d-flex justify-content-between align-items-center m-3">
@@ -171,8 +206,8 @@ const EditClientModal = () => {
                                 </div>
                                 {/* footer of modal */}
                                 <div className=" d-flex justify-content-end m-3 gap-2">
-                                    <button type="button" onClick={handleEdit} className="btn btn-outline-success textcolor " data-bs-dismiss="modal">Discard</button>
-                                    <button type="button" className="btn btn-success bg_green text-white">Sava Changes</button>
+                                    <button type="button" className="btn btn-outline-success textcolor " data-bs-dismiss="modal">Discard</button>
+                                    <button type="button" onClick={handleEdit} className="btn btn-success bg_green text-white">Save Changes</button>
                                 </div>
                             </div>
                         </div>
