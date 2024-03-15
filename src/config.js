@@ -7,3 +7,4 @@ export const add_client_url = `${API_BASE_URL}/saveClient`;
 export const dashboard_data_url = `${API_BASE_URL}/getDashboardData`;
 export const get_all_clients_url = `${API_BASE_URL}/getAllClients`;
 export const get_all_propoposal_url = `${API_BASE_URL}/getAllProposals`;
+export const get_country_list_url = `${API_BASE_URL}/getCountryList`;

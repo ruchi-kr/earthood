@@ -89,11 +89,6 @@ const PTdashboard = () => {
                     />
                      </Dropdown>
                 </div>
-                {/* <form className="d-flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button className="btn btn-outline-success" type="submit">Search</button>
-                  </form> */}
-
               </div>
             </nav>
 
@@ -110,16 +105,6 @@ const PTdashboard = () => {
         <div className="d-flex gap-2 align-items-center mx-5">
           <button className='btn border-light-subtle textcolor bg-white' style={{ fontSize: '14px' }}>Download Report  <img src={downloadsign} alt="downloadsign" /></button>
           <Modal />
-          {/* <div className="nav-item border-0 dropdown " role="group">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Add 
-            </a>
-            <ul className="dropdown-menu">
-              <li><button className="nav-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Client</button></li>
-              <li><button className="nav-link" to="#">Add Project</button></li>
-            </ul>
-          </div> */}
         </div>
       </div>
       <Tab />

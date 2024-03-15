@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Input } from 'antd';
 import axios from 'axios'
 import { add_client_url } from '../config';
@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import { get_country_list_url } from '../config'
 const Modal = () => {
 
     const CONFIG_Token = {                                         //config object
@@ -20,37 +21,54 @@ const Modal = () => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [mobile_number, setMobile_number] = useState('');
+    const [mobile_number, setMobile_number] = useState(0);
     const [contact_person, setContact_person] = useState('');
     const [contact_email, setContact_email] = useState('');
-    const [country, setCountry] = useState('');
+    const [country, setOurCountry] = useState('');
+    const [country_list, setOurCountryList] = useState([]);
     const [address, setAddress] = useState('');
     const [contact_mobile, setContact_mobile] = useState('');
 
     const navigate = useNavigate();
     const saveclient = (event) => {
         event.preventDefault();
-        const requestData = { name,email,mobile_number,contact_person,contact_email,country,address,contact_mobile}
+        const requestData = { name, email, mobile_number, contact_person, contact_email, country, address, contact_mobile }
         axios.post(`${add_client_url}`, requestData, CONFIG_Token)
             .then((result) => {
-                if (result.status) {
+                if (result.status===200 && result.data.status===true) {
                     toast.success('Client Added Successfully!');
                     navigate('/dashboard')
-                }
+                
                 setAddress('');
                 setName('');
                 setEmail('');
                 setMobile_number('');
                 setContact_person('');
                 setContact_email('');
-                setCountry('');
+                setOurCountry('');
                 setContact_mobile('');
+                }
+                else{
+                    toast.error(result.data.message);
+                }
             })
             .catch((error) => {
                 console.log(error);
                 toast.error(error.response.data.message);
             })
     }
+    const fetchcountrylist = async () => {
+        try {
+            const countrylist = await axios.get(`${get_country_list_url}`, CONFIG_Token)
+            console.log("country list",countrylist.data)
+            setOurCountryList(countrylist.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(function () {
+        fetchcountrylist()
+    }, [])
     return (
         <div>
 
@@ -85,14 +103,20 @@ const Modal = () => {
                                     <div className="row">
                                         <div className="col-6 mb-3">
                                             <label htmlFor="contactno" className="form-label">Contact No.*</label>
-                                            <PhoneInput defaultCountry='india' type="tel" value={mobile_number} onChange={(e) => setMobile_number(e.target.value)} id="contactno" className='borderlightgreen rounded-1' placeholder="Contact No." variant="outlined" required />
+                                            <PhoneInput Country='US' type="tel" value={mobile_number} onChange={setMobile_number} id="contactno" className='borderlightgreen rounded-1' placeholder="Contact No." variant="outlined" required />
                                         </div>
                                         <div className="col-6 mb-3">
                                             <label htmlFor="country" className="form-label" required>Country*</label>
                                             {/* <Input value={country} onChange={(e) => setCountry(e.target.value)} type="text" id="country" className='borderlightgreen' placeholder="Country" variant="outlined" required /> */}
-                                            <select className="form-select borderlightgreen form-select-sm" aria-label="Default select example" value={country} onChange={(e) => setCountry(e.target.value)}>
+                                            <select className="form-select borderlightgreen form-select-sm" aria-label="Default select example" value={country} onChange={(e) => setOurCountry(e.target.value)}>
                                                 <option selected>Country</option>
-                                                <option value={1}>One</option>
+                                                {
+                                                    country_list.map((item, index) => {
+                                                        return (
+                                                            <option key={index} value={item.id}>{item.name}</option>
+                                                        )
+                                                    })
+                                                }                                         
                                             </select>
                                         </div>
                                     </div>
@@ -121,7 +145,7 @@ const Modal = () => {
                                     <div className="row">
                                         <div className="mb-3 col-6">
                                             <label htmlFor="contactmobileno">Contact No.*</label>
-                                            <PhoneInput defaultCountry='india' inputProps={{required:true}} value={contact_mobile} onChange={(e) => setContact_mobile(e.target.value)} type="tel" className='borderlightgreen rounded-1' id="contactmobileno" placeholder="Contact No." variant="outlined" required />
+                                            <PhoneInput Country='US' inputProps={{ required: true }} value={contact_mobile} onChange={setContact_mobile} type="tel" className='borderlightgreen rounded-1' id="contactmobileno" placeholder="Contact No." variant="outlined" required />
                                         </div>
                                     </div>
                                 </div>

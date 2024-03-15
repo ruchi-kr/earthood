@@ -3,6 +3,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 // pages
 import CustomTable from './CustomTable'
+import EditClientModal from './EditClientModal'
 // ant design components
 import { Tabs, Table } from 'antd'
 
@@ -15,6 +16,7 @@ import editicon from '../Assets/editicon.png';
 import groupicon from '../Assets/Group 4.png'
 // api for fetching data
 import { get_all_clients_url, get_all_propoposal_url } from '../config';
+
 const Tab = () => {
   const CONFIG_Token = {                                         //config object
     headers: {
@@ -24,19 +26,19 @@ const Tab = () => {
   }
   const [alldata, setAlldata] = useState([]);
   const [proposal_verify, setProposal_verify] = useState([]);
-  const [statuschange, setStatuschange] =useState(1)
+  // const [statuschange, setStatuschange] =useState(1)
  
-  const handleStatus = () => {
-    if(key===2){
-      setStatuschange(3);
-    }
-    else if(key===6){
-      setStatuschange(6);
-    }
-    else{
-      setStatuschange(1);
-    }
-  }
+  // const handleStatus = () => {
+  //   if(key===2){
+  //     setStatuschange(3);
+  //   }
+  //   else if(key===6){
+  //     setStatuschange(6);
+  //   }
+  //   else{
+  //     setStatuschange(1);
+  //   }
+  // }
   const allData = async () => {
     try {
       const response = await axios.get(`${get_all_clients_url}`, CONFIG_Token);
@@ -44,7 +46,7 @@ const Tab = () => {
       console.log("my total client data", response.data.data)
 
       const status = {
-        "status": statuschange
+        "status": 1
       }
       
       const response2 = await axios.post(`${get_all_propoposal_url}`, status, CONFIG_Token);     
@@ -108,7 +110,7 @@ const Tab = () => {
       key: 'x',
       fixed: 'right',
       width: 130,
-      render: () => <a><img src={viewicon} alt="view icon" /> &nbsp;<img src={editicon} alt="edit icon" /></a>,
+      render: () => <a className='d-flex justify-content-center'><img src={viewicon} alt="view icon" /> &nbsp;<EditClientModal/></a>,
     },
   ];
   const columnsProposalTeam = [
@@ -150,7 +152,7 @@ const Tab = () => {
       key: 'x',
       fixed: 'right',
       width: 130,
-      render: () => <a><img src={viewicon} alt="view icon" />&nbsp;<img src={editicon} alt="edit icon" /></a>,
+      render: () => <a><img src={viewicon} alt="view icon" />&nbsp;<EditClientModal/></a>,
     },
   ];
 
@@ -160,9 +162,10 @@ const Tab = () => {
   }, [])
   return (
     <>
+    {/*  onChange={handleStatus} */}
       <Tabs defaultActiveKey="1" centered
         indicator={{ Backgroundcolor: '#07B6AF' }}
-        onChange={handleStatus} >
+        >
         <Tabs.items tab={
           <div className='border-1 borderlightgreen bg-white rounded-2 p-2 mx-3 text-center tab_dashboard_size'>
             <img className=' lh-2' src={groupicon} alt="icon" />
