@@ -17,9 +17,11 @@
 
 }
 .textgrey {
-  color: '#515151';
+  color: #515151;
 }
-
+.iconcolor {
+  color: #07b6af;
+}
 .textcolorblue {
   color: #103054;
 }
@@ -47,7 +49,9 @@
 }
 
 .borderlightgreen{
-border : 1px solid #07B6AF;
+border : 1px solid #07b6af4d ;
+/* border : 1px solid #07b6af1a ; */
+
 }
 .bordergreen{
 border: 1px solid #1EA74A;
@@ -60,7 +64,7 @@ border: 1px solid #1EA74A;
 .btnhovergrey:hover{
   background-color: rgb(81, 81, 81,0.1);
   color: #fff;
-  border-radius: 14px;
+  border-radius: 8px;
 }
 
 .tab_dashboard_size{
@@ -114,3 +118,19 @@ border: 1px solid #1EA74A;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
 } 
+/* .modal {
+	position: fixed;
+	z-index: 1000; /* Adjust the z-index value as needed */
+	/* Add other styling properties */
+  
+	.ant-tabs-tab.ant-tabs-tab-active {
+		/* border: 2px solid #1EA74A !important; */
+		transform: scale(1.1);
+		padding: 0;
+		margin:0;
+		z-index: 2;
+		border-color: #1EA74A !important;
+	  }
+	  .ant-tabs-tab{
+		transition: all 0.3s ease-in-out;
+	  }

@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-// pages
 import CustomTable from './CustomTable'
 import EditClientModal from './EditClientModal'
-// ant design components
-import { Tabs, Table } from 'antd'
-
-// api for fetching data
+import { Tabs, Table, Tag } from 'antd';
 import { dashboard_data_url } from '../config'
-// figma design icons
 import viewicon from '../Assets/viewicon.png';
 import editicon from '../Assets/editicon.png';
-// import vectorarrow from '../Assets/Vectorarrow.png'
 import groupicon from '../Assets/Group 4.png'
-// api for fetching data
 import { get_all_clients_url, get_all_propoposal_url } from '../config';
+import { useNavigate } from 'react-router-dom';
 
 const Tab = () => {
-  const CONFIG_Token = {                                         //config object
+  const CONFIG_Token = {
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + sessionStorage.getItem("token")
@@ -26,53 +20,82 @@ const Tab = () => {
   }
   const [alldata, setAlldata] = useState([]);
   const [proposal_verify, setProposal_verify] = useState([]);
-  // const [statuschange, setStatuschange] =useState(1)
- 
-  // const handleStatus = () => {
-  //   if(key===2){
-  //     setStatuschange(3);
-  //   }
-  //   else if(key===6){
-  //     setStatuschange(6);
-  //   }
-  //   else{
-  //     setStatuschange(1);
-  //   }
-  // }
+
+  // const navigate = useNavigate();
+  
   const allData = async () => {
     try {
       const response = await axios.get(`${get_all_clients_url}`, CONFIG_Token);
       setAlldata(response.data.data);
-      console.log("my total client data", response.data.data)
-
-      const status = {
-        "status": 1
+      console.log("dashboard data",response.data.data)
+      const tabstatus = {
+        // eslint-disable-next-line no-use-before-define
+        "status": statuskey
       }
-      
-      const response2 = await axios.post(`${get_all_propoposal_url}`, status, CONFIG_Token);     
+      const response2 = await axios.post(`${get_all_propoposal_url}`,tabstatus, CONFIG_Token);
       setProposal_verify(response2.data.data);
-      console.log("my proposal data", response2.data.data)
     }
     catch (error) {
       console.log(error)
       toast.error(error.response.data.message)
     }
   }
- 
+  const [statuskey, setStatus] = useState(1);
+  const handleStatus = async (id) => {
+    console.log("handle status", id);
+    try {
+      console.log(id)
+      if (id == 3) {
+        setStatus(3)
+        console.log("calling 3")
+      }
+      else if (id == 4) {
+          setStatus(6)
+      }
+      else if (id == 2) {
+        setStatus(1)
+      }
+
+    }
+    catch (error) {
+      toast.error(error.response.data.message)
+    }
+  }
+  useEffect(() => {
+    console.log("useEffect triggered with status:", statuskey);
+    allData();
+  }, [statuskey]);
+
   const [totalclients, setTotalclients] = useState(0)
   const [proposal_under_veri, setProposal_under_veri] = useState(0)
   const [proposal_under_modi, setProposal_under_modi] = useState(0)
   const [submitted_proposal, setSubmitted_proposal] = useState(0)
+
+  const [showModal, setShowModal] = useState(false);
+  const [clientId, setClientId] = useState(null);
+
+  const handleModalOpen = (id) => {
+    setClientId(id);
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    setClientId(null);
+    window.location.reload();
+  };
+
+  
+
   const fetchAllDashData = async () => {
     try {
       const dashboarddata = await axios.get(`${dashboard_data_url}`, CONFIG_Token);
-      console.log(dashboarddata)
+      console.log("dash data", dashboarddata.data.dashboard)
       setTotalclients(dashboarddata.data.dashboard.total_clients)
-      setProposal_under_veri(dashboarddata.data.dashboard.projects_under_verification)
-      setProposal_under_modi(dashboarddata.data.dashboard.project_reverted)
-      setSubmitted_proposal(dashboarddata.data.dashboard.sales_submitted)
+      setProposal_under_veri(dashboarddata.data.dashboard.status1)
+      setProposal_under_modi(dashboarddata.data.dashboard.status3)
+      setSubmitted_proposal(dashboarddata.data.dashboard.status6)
     } catch (error) {
-      console.log(error)
       toast.error(error.response.data.message)
     }
   }
@@ -83,6 +106,7 @@ const Tab = () => {
       dataIndex: 'id',
       fixed: 'left',
       width: 80,
+      render: (id, record, index) => { ++index; return index; },
     },
     {
       title: 'Client Name',
@@ -98,11 +122,26 @@ const Tab = () => {
     },
     {
       title: 'Contact Details',
-      dataIndex: 'contact_email',
+      render: (text, record) => (
+        <span>{record.contact_email} {record.contact_mobile}</span>
+      )
     },
     {
       title: 'Status',
+      key: 'status_tags',
       dataIndex: 'status_msg',
+      // render: (text, record) => (
+      //   <>
+      //     {record.tags && record.tags.map((tag) => {
+      //       let color = record.status_msg === 'active' ? 'green' : 'red';
+      //       return (
+      //         <Tag color={color} key={tag}>
+      //           {tag.toUpperCase()}
+      //         </Tag>
+      //       );
+      //     })}
+      //   </>
+      // ),
     },
     {
       title: 'Action',
@@ -110,17 +149,19 @@ const Tab = () => {
       key: 'x',
       fixed: 'right',
       width: 130,
-      render: (text, record) => <a className='d-flex justify-content-center'><img src={viewicon} alt="view icon" /> &nbsp;<EditClientModal clientId={record.id}/></a>,
+      render: (text, record) => <a className='d-flex justify-content-center'><img src={viewicon} alt="view icon" /> &nbsp;<img src={editicon} onClick={() => handleModalOpen(record.id)} /></a>,
     },
   ];
+
   const columnsProposalTeam = [
     {
       title: 'S.No',
-      dataIndex: 'proposal_id',
+      dataIndex: 'id',
       fixed: 'left',
       width: 80,
+      render: (id, record, index) => { ++index; return index; },
     },
-    Table.SELECTION_COLUMN,
+    
     {
       title: 'EID',
       fixed: 'left',
@@ -152,65 +193,70 @@ const Tab = () => {
       key: 'x',
       fixed: 'right',
       width: 130,
-      render: (text, record) => <a><img src={viewicon} alt="view icon" />&nbsp;<EditClientModal clientId={record.id}/></a>,
+      render: () => <a><img src={viewicon} alt="view icon" />&nbsp;</a>,
     },
   ];
 
   useEffect(function () {
     fetchAllDashData()
-    allData()
-  }, [])
+  })
+  
   return (
     <>
-    {/*  onChange={handleStatus} */}
+      {/*  onChange={handleStatus} */}
+
       <Tabs defaultActiveKey="1" centered
         indicator={{ Backgroundcolor: '#07B6AF' }}
-        >
-        <Tabs.items tab={
-          <div className='border-1 borderlightgreen bg-white rounded-2 p-2 mx-3 text-center tab_dashboard_size'>
-            <img className=' lh-2' src={groupicon} alt="icon" />
-            <p className='font14px textlightgreen text-capitalize'>Total Clients</p>
+        // onChange={handleStatus}
+        onTabClick={handleStatus}
+      >
+        <Tabs.TabPane tab={
+          <div className='border-1 borderlightgreen bg-white rounded-2 p-2 mx-1 text-center tabactivecolor tab_dashboard_size'>
+            <img src={groupicon} alt="icon" />
+            <p className='font14px textlightgreen text-capitalize mt-3'>Total Clients</p>
             <p className='textcolorblue' style={{ fontSize: '35px' }}>{totalclients}</p>
-
           </div>
-        } key="1">
-          
+        } key={1}>
+
           <CustomTable columns={columnstotalclient} data={alldata} />
-        </Tabs.items>
-        <Tabs.items tab={
+        </Tabs.TabPane>
+        <Tabs.TabPane tab={
           <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tab_dashboard_size'>
             <img src={groupicon} alt="icon" />
-            <p className='font14px textlightgreen text-capitalize text'>proposal under verification</p>
+            <p className='font14px textlightgreen text-capitalize text mt-3'>proposal under verification</p>
             <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_under_veri}</p>
 
           </div>
-        } key="2" >
-       
+        } key={2} >
+
           <CustomTable columns={columnsProposalTeam} data={proposal_verify} />
-        </Tabs.items>
-        <Tabs.items tab={
+        </Tabs.TabPane>
+        <Tabs.TabPane tab={
           <div className='border-1 borderlightgreen bg-white rounded-2 p-2 m-3 text-center tab_dashboard_size'>
             <img src={groupicon} alt="icon" />
-            <p className='font14px textlightgreen text-capitalize'>proposal under modification</p>
+            <p className='font14px textlightgreen text-capitalize mt-3'>proposal under modification</p>
             <p className='textcolorblue' style={{ fontSize: '35px' }}>{proposal_under_modi}</p>
 
           </div>
-        } key="3" >
-          
+        } key={3} >
+
           <CustomTable columns={columnsProposalTeam} data={proposal_verify} />
-        </Tabs.items>
-        <Tabs.items tab={
-          <div className='border-1 borderlightgreen rounded-2 p-2 m-3 text-center tab_dashboard_size'>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab={
+          <div className='border-1 borderlightgreen rounded-2 p-2 m-3 text-center tab_dashboard_size bg-white'>
             <img src={groupicon} alt="icon" />
-            <p className='font14px textlightgreen text-capitalize'>proposal Submitted to Sales</p>
+            <p className='font14px textlightgreen text-capitalize mt-3'>proposal Submitted to Sales</p>
             <p className='textcolorblue' style={{ fontSize: '35px' }}>{submitted_proposal}</p>
 
           </div>
-        } key="4">
+        } key={4}>
           <CustomTable columns={columnsProposalTeam} data={proposal_verify} />
-        </Tabs.items>
+        </Tabs.TabPane>
 
       </Tabs>
+      :
+      {showModal ? <EditClientModal clientId={clientId} onOpenModal={handleModalClose} /> : ''}
+
     </>
   )
 }

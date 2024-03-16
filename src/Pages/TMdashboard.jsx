@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
 // pages
-import Tab from '../Components/Tab'
+import TabTM from '../Components/TabTM'
 import Modal from '../Components/Modal'
 
 import downloadsign from '../Assets/Vector.png'
 
-const PTdashboard = () => {
-  const CONFIG_OBJ = {                                         //config object
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + sessionStorage.getItem("token")
-    }
-  }
-
+const TMdashboard = () => {
+//   const CONFIG_OBJ = {                                         //config object
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Authorization": "Bearer " + sessionStorage.getItem("token")
+//     }
+//   }
 
   let [username, setUserName] = useState('');
 
@@ -31,21 +30,20 @@ const PTdashboard = () => {
           {/* detail section */}
           <div>
             <h5 className='textcolorblue'>Welcome Back, {username}</h5>
-            {/* <p className='textlightgreen'>Track, manage & forecast your day to day activity!</p> */}
           </div>
           <div className="d-flex gap-2 align-items-center mx-5">
-            <button className='btn border-light-subtle textcolor bg-white' style={{ fontSize: '14px' }}>Download Report  <img src={downloadsign} alt="downloadsign" /></button>
-            <Modal />
+            <button className='btn border-light-subtle textcolor me-5 bg-white' style={{ fontSize: '14px' }}>Download Report  <img src={downloadsign} alt="downloadsign" /></button>
+            {/* <Modal /> */}
           </div>
         </div>
       </div>
       {/* 2nd row */}
-      <div className="row mx-0">
-        <Tab />
+      <div className="row mx-3">
+        <TabTM />
       </div>
       {/* table section */}
     </div>
   )
 }
 
-export default PTdashboard
+export default TMdashboard

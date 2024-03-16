@@ -103,13 +103,13 @@ const Modal = () => {
                                     <div className="row">
                                         <div className="col-6 mb-3">
                                             <label htmlFor="contactno" className="form-label">Contact No.*</label>
-                                            <PhoneInput Country='US' type="tel" value={mobile_number} onChange={setMobile_number} id="contactno" className='borderlightgreen rounded-1' placeholder="Contact No." variant="outlined" required />
+                                            <PhoneInput country='US' type="tel" value={mobile_number} onChange={setMobile_number} id="contactno" className='borderlightgreen rounded-1' placeholder="Contact No." variant="outlined" required />
                                         </div>
                                         <div className="col-6 mb-3">
                                             <label htmlFor="country" className="form-label" required>Country*</label>
                                             {/* <Input value={country} onChange={(e) => setCountry(e.target.value)} type="text" id="country" className='borderlightgreen' placeholder="Country" variant="outlined" required /> */}
                                             <select className="form-select borderlightgreen form-select-sm" aria-label="Default select example" value={country} onChange={(e) => setOurCountry(e.target.value)}>
-                                                <option selected>Country</option>
+                                                <option value="">Country</option>
                                                 {
                                                     country_list.map((item, index) => {
                                                         return (
@@ -145,7 +145,7 @@ const Modal = () => {
                                     <div className="row">
                                         <div className="mb-3 col-6">
                                             <label htmlFor="contactmobileno">Contact No.*</label>
-                                            <PhoneInput Country='US' inputProps={{ required: true }} value={contact_mobile} onChange={setContact_mobile} type="tel" className='borderlightgreen rounded-1' id="contactmobileno" placeholder="Contact No." variant="outlined" required />
+                                            <PhoneInput country='US' inputprops={{ required: true }} value={contact_mobile} onChange={setContact_mobile} type="tel" className='borderlightgreen rounded-1' id="contactmobileno" placeholder="Contact No." variant="outlined" required />
                                         </div>
                                     </div>
                                 </div>

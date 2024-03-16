@@ -27,7 +27,17 @@ const Login = () => {
                     sessionStorage.setItem('user', JSON.stringify(result.data.user));
                     dispatch({ type: 'LOGIN_SUCCESS', payload: result.data.user });
                     toast.success('User Logged In Successfully!');
-                    navigate('/dashboard')
+                    const role_id=result.data.user.designation_id;
+                    if(role_id === 6){
+                        navigate('/dashboard')
+                    }
+                    else if(role_id === 3 || role_id === 4){
+                        navigate('/tmdashboard')
+                    }
+                    else{
+                        navigate('/stdashboard')
+                    }
+                   
                 }
                 else {
                     toast.error(result.data.error);
