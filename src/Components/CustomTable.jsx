@@ -1,9 +1,13 @@
 import React from 'react';
-// ant design components
 import { Table } from 'antd';
 
 const CustomTable = (props) => {
- 
+  const handleTableChange = (pagination, filters, sorter) => {
+    console.log('Pagination:', pagination);
+    console.log('Filters:', filters);
+    console.log('Sorter:', sorter);
+  };
+
   return (
     <div className='container-fluid'>
       <div className="row mx-3">
@@ -13,12 +17,26 @@ const CustomTable = (props) => {
               <input className="form-control me-2 border-1 bg-light" type="search" placeholder="Search..." aria-label="Search" />
             </div>
           </div>
-          <Table columns={props.columns} dataSource={props.data} scroll={{ x: 1300, }} pagination='bottomCenter'/>         
-           {/* <Table rowSelection={rowSelection} columns={props.column} dataSource={props.datas} scroll={{ x: 1300}} /> */}
-          {/* rowSelection={rowSelection} pagination={{position: [top, bottom],}}  pagination={{position: [bottom]}}*/}
+        
+          <Table
+            columns={props.columns}
+            dataSource={props.data}
+            scroll={{ x: 1300 }}
+            pagination={{
+              position: ['bottomCenter'],
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+              pageSizeOptions: ['10', '20', '50'],
+              pageSize: 10, // Set the page size to match the data from backend
+              total: props.total // Total count of items from backend
+            }}
+            onChange={handleTableChange}
+          />
         </div>
       </div>
     </div>
   );
 };
+
 export default CustomTable;

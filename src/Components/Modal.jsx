@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-import { get_country_list_url } from '../config'
+import { get_country_url } from '../config'
 const Modal = () => {
 
     const CONFIG_Token = {                                         //config object
@@ -59,7 +59,7 @@ const Modal = () => {
     }
     const fetchcountrylist = async () => {
         try {
-            const countrylist = await axios.get(`${get_country_list_url}`, CONFIG_Token)
+            const countrylist = await axios.get(`${get_country_url}`, CONFIG_Token)
             console.log("country list",countrylist.data)
             setOurCountryList(countrylist.data.data)
         } catch (error) {

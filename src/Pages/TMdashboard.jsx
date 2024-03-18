@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 // pages
 import TabTM from '../Components/TabTM'
-import Modal from '../Components/Modal'
+// import Modal from '../Components/Modal'
 
 import downloadsign from '../Assets/Vector.png'
 

@@ -8,6 +8,7 @@ import STdashboard from './Pages/STdashboard';
 import TMdashboard from './Pages/TMdashboard';
 import AddProject from './Pages/AddProject';
 import Navbar from './Components/Navbar';
+import ClientDetails from './Pages/ClientDetails';
 function App() {
   return (
     <>
@@ -20,10 +21,10 @@ function App() {
           <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
 
           <Route path="/projects" element={<AddProject />}></Route>
-          {/*
-          <Route path="/invoice" element={}></Route>
-          <Route path="/clients" element={}></Route>
-          */}
+          
+           {/* <Route path="/invoice" element={}></Route> */}
+          <Route path="/clients/:id" element={<ClientDetails/>}></Route>
+          
           <Route path='/dashboard' element={<PTdashboard />}></Route>
           <Route path='/stdashboard' element={<STdashboard />}></Route>
           <Route path='/tmdashboard' element={<TMdashboard />}></Route>

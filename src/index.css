@@ -1,0 +1,18 @@
+.ant-tabs-tab.ant-tabs-tab-active {
+    /* border: 2px solid #1EA74A !important; */
+    transform: scale(1.1);
+    padding: 0;
+    margin: 0;
+    z-index: 2;
+    border-color: #1ea74a !important;
+  }
+  .ant-tabs-tab {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .ant-tabs-ink-bar {
+    display: none; /* Hide indicator */
+  }
+  .ant-tabs-nav .ant-tabs-tab-active .tabactivecolor {
+    border: 2px solid #1ea74a; /* Change border color here */
+  }
